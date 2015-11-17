@@ -13,7 +13,7 @@
 #define PYTHON "python-2.7.10.amd64.msi"
 #define USERPROFILE "C:\Users\thomashourlier"
 #define RESSOURCESPATH "C:\Users\thomashourlier\Documents\projet-couche-installer"
-#define PROJECTPATH "C:\Users\thomashourlier\Documents\projet-couche"
+#define PROJECTPATH "C:\Users\thomashourlier\Documents\projet-couche-installer/source"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -30,7 +30,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir={#USERPROFILE}\Desktop
+OutputDir={#RESSOURCESPATH}
 OutputBaseFilename={#MyAppShortName}Installer
 Compression=lzma
 SolidCompression=yes
