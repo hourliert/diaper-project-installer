@@ -74,3 +74,19 @@ Filename: "{app}\{#NSSM}"; Parameters: "set {#MyAppShortName} AppRotateOnline 0"
 Filename: "{app}\{#NSSM}"; Parameters: "set {#MyAppShortName} AppRotateSeconds 86400"; Flags: runhidden;
 Filename: "{app}\{#NSSM}"; Parameters: "set {#MyAppShortName} AppRotateBytes 1048576"; Flags: runhidden;
 Filename: "{sys}\net.exe"; Parameters: "start {#MyAppShortName}"; Flags: runhidden;
+
+[UninstallRun]
+; Removes System Service
+Filename: "{sys}\net.exe"; Parameters: "stop {#MyAppShortName}"; Flags: runhidden;
+Filename: "{app}\{#NSSM}"; Parameters: "remove {#MyAppShortName} confirm"; Flags: runhidden;
+
+; Remove Firewall Rules
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Node In"" program=""{pf64}\nodejs\node.exe"""; Flags: runhidden;
+Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Node Out"" program=""{pf64}\nodejs\node.exe"""; Flags: runhidden;
+
+; Uninstall Node
+Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#NODE}""";
+Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#PYTHON}""";
+
+; Remove all leftovers
+Filename: "{sys}\rd"; Parameters: "/s /q ""{app}\*""";
