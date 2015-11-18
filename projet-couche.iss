@@ -34,6 +34,7 @@ OutputDir={#RESSOURCESPATH}
 OutputBaseFilename={#MyAppShortName}Installer
 Compression=lzma
 SolidCompression=yes
+PrivilegesRequired=admin 
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -54,7 +55,7 @@ Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\{#NODE}""";
 Filename: "{sys}\msiexec.exe"; Parameters: "/passive /i ""{app}\{#PYTHON}""";
 
 ; postinstall launch
-Filename: "{app}\{#MyAppPostInstall}"; Flags: waituntilterminated
+Filename: "{app}\{#MyAppPostInstall}"; BeforeInstall: SetEnvPath; Flags: runascurrentuser waituntilterminated
 
 ; Add Firewall Rules
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""Node In"" program=""{pf64}\nodejs\node.exe"" dir=in action=allow enable=yes"; Flags: runhidden;
@@ -90,3 +91,18 @@ Filename: "{sys}\msiexec.exe"; Parameters: "/passive /x ""{app}\{#PYTHON}""";
 
 ; Remove all leftovers
 Filename: "{sys}\rd"; Parameters: "/s /q ""{app}\*""";
+
+[Code]
+#ifdef UNICODE
+  #define AW "W"
+#else
+  #define AW "A"
+#endif
+function SetEnvironmentVariable(lpName: string; lpValue: string): BOOL;
+  external 'SetEnvironmentVariable{#AW}@kernel32.dll stdcall';
+
+procedure SetEnvPath;
+begin
+  if not SetEnvironmentVariable('PATH', GetEnv('PATH') + ';C:\Program Files\nodejs') then
+    MsgBox(SysErrorMessage(DLLGetLastError), mbError, MB_OK);
+end;
