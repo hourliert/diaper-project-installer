@@ -45,7 +45,7 @@ Source: "{#RESSOURCESPATH}\node-v4.2.2-x64.msi"; DestDir: "{app}"; Flags: ignore
 Source: "{#RESSOURCESPATH}\nssm.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#RESSOURCESPATH}\python-2.7.10.amd64.msi"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#RESSOURCESPATH}\win-install.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#PROJECTPATH}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PROJECTPATH}\build\*"; DestDir: "{app}\build"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Run]

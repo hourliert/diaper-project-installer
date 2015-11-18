@@ -1,1 +1,1 @@
-npm install --loglevel http & ".\node_modules\.bin\gulp" bundle & ".\node_modules\.bin\sequelize" db:migrate & ".\node_modules\.bin\sequelize" db:seed
+npm install sqlite3 sequelize sequelize-cli source-map-support --loglevel http & ".\node_modules\.bin\sequelize" db:migrate & ".\node_modules\.bin\sequelize" db:seed
